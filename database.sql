@@ -1,8 +1,8 @@
 CREATE TABLE set (
-	"id" integer PRIMARY KEY UNIQUE,
-	"session_id" integer NOT NULL,
-	"rep" integer,
-	"weight_lbs" integer
+	"id" 						integer PRIMARY KEY UNIQUE,
+	"session_id" 		integer NOT NULL,
+	"rep" 					integer,
+	"weight_lbs" 		integer
 );
 
 CREATE TABLE exercise(
@@ -14,26 +14,30 @@ CREATE TABLE exercise(
 );
 
 CREATE TABLE session (
-	"id" SERIAL PRIMARY KEY,
-	"exercise_id" integer REFERENCES exercise,
-	"set_id" integer REFERENCES set
+	"id" 							SERIAL PRIMARY KEY,
+	"exercise_id" 		integer REFERENCES exercise,
+	"set_id" 					integer REFERENCES set
 );
 
 CREATE TABLE schedule (
-	"id" SERIAL PRIMARY KEY,
-	"day_name" varchar(20),
-	"session_id" integer REFERENCES "session"
+	"id" 					SERIAL PRIMARY KEY,
+	"day_name" 		varchar(20),
+	"session_id" 	integer REFERENCES "session"
 	);
+--ADDING THE SET DAYS OF THE WEEK.
+INSERT INTO schedule ("day_name")
+VALUES ('Sunday'), ('Monday'), ('Tuesday'), ('Wednesday'), ('Thursday'), ('Friday'), ('Saturday');
+
 
 CREATE TABLE "user" (
-	"id" SERIAL PRIMARY KEY,
-	"password" varchar(255) NOT NULL DEFAULT 'NOT NULL',
-	"username" varchar(255) NOT NULL UNIQUE,
-	"access_level" integer NOT NULL DEFAULT '0',
-	"schedule_id" integer REFERENCES schedule
+	"id" 						SERIAL PRIMARY KEY,
+	"password" 			varchar(255) NOT NULL DEFAULT 'NOT NULL',
+	"username" 			varchar(255) NOT NULL UNIQUE,
+	"access_level"	integer NOT NULL DEFAULT '0',
+	"schedule_id" 	integer REFERENCES schedule
 );
 
---CREATING THE EXERCISES THAT ARE SET FOR THE APP 
+--CREATING THE EXERCISES 
 INSERT INTO exercise(muscle_group,gif_url,id,exercise_name,muscle_target) VALUES
  ('waist','http://d205bpvrqc9yn1.cloudfront.net/0001.gif',0001,'3/4 sit-up','abs')
 ,('waist','http://d205bpvrqc9yn1.cloudfront.net/0002.gif',0002,'45° side bend','abs')
